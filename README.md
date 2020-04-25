@@ -58,8 +58,8 @@ Add rotation
 Remove rotation, add Shear
 ![Custom_train_v4-4](/figures/custom_model_relu_rescaleX_dataAugFlipShift0.2Shear.png)
 
-## Test restul
-![Custom_test_1(/figures/test_accuracy_custom.PNG)
+## Test result
+![Custom_test_1(/figures/test_accuracy_custom.png)
 ![Custom_test_2](/figures/custom_model.png)
 
 # InceptionV3
