@@ -73,8 +73,10 @@ Remove rotation, add Shear
 ![Custom_train_v4-1](/figures/test_accuracy_Inception_m2.png)
 ![Custom_train_v4-1](/figures/InceptionV3_meth2.png)
 
-## Data augmentation + imbalanced data (10x more patches without tumor)
+## Imbalanced data (10x more patches without tumor)
 ![Custom_train_v4-1](/figures/InceptionV3_method3_noDataAug.png)
+
+## Data augmentation + imbalanced data (10x more patches without tumor)
 ![Custom_train_v4-1](/figures/InceptionV3_method3.png)
 ![Custom_train_v4-1](/figures/test_accuracy_Inception_m3.png)
 ![Custom_train_v4-1](/figures/InceptionV3_meth3.png)
