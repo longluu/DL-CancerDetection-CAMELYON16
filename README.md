@@ -16,11 +16,40 @@ Now, we're ready for some exciting results of training deep (or shallow) network
 
 # Custom CNN networks
 ## Architecture: 
-This is are relatively "shallow" neural networks. There are 4 convoluational blocks, each block contains a convolutional layer, batch normalization, drop out, activation and max pooling (2 x 2). I use Adam optimization with default parameters. I use batch size 128.
+This is are relatively "shallow" neural networks. There are 4 convoluational blocks, each block contains a convolutional layer, batch normalization, drop out, activation and max pooling (2 x 2). I use Adam optimization with default parameters and batch size 128. I set the max number of epoch to 200 and early stopping to 50 epochs.
 
 ## V-1
 This is the most basic version. Here is the result.
 ![Custom_train_v1](/figures/custom_model_relu.png)
+
+Some observations:
+* Training loss and accuracy curves converge pretty quickly and are smooth/stable. However the validation loss and accuracy oscillates a lot even towards the end of the training. That signals some instability in the networks despite the seemingly good result (96% accuracy).
+* There is a big gap between training and testing curves which clearly indicates the model overfits to data. It's interesting because even a shallow model may overfitting!
+
+## V-2
+Then I noted that I didn't normalize the values of input data (intensity values are 0-255). So heeding the advice of many deep learning gurus, I scaled the input to 0-1 range. Here is the result.
+![Custom_train_v2](/figures/custom_model_relu_rescaleX.png)
+
+Some observations:
+* The model stops earlier.
+* The overfitting and oscillation are still there.
+
+## V-3
+Now I try drop out to help with overfitting. First I set the rate to 0.2.
+![Custom_train_v3-1](/figures/custom_model_relu_rescaleX_drop0.2.png)
+
+Then I tried 0.4.
+![Custom_train_v3-2](/figures/custom_model_relu_rescaleX_drop0.4.png)
+
+Some observations:
+* The model also stops early.
+* Drop-out doesn't help. It actually hurts when I increase the rate.
+
+## V-4
+Now I try another regul. Here is the result.
+![Custom_train_v4](/figures/custom_model_relu_rescaleX_dataAugFlip.png)
+
+Some observations:
 
 # InceptionV3 - version 1
 
