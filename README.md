@@ -18,7 +18,7 @@ Now, we're ready for some exciting results of training deep (or shallow) network
 ## Architecture: 
 This is are relatively "shallow" neural networks. There are 4 convoluational blocks, each block contains a convolutional layer, batch normalization, drop out, activation and max pooling (2 x 2). I use Adam optimization with default parameters and batch size 128. I set the max number of epoch to 200 and early stopping to 50 epochs.
 
-## V-1
+## Basic model
 This is the most basic version. Here is the result.
 ![Custom_train_v1](/figures/custom_model_relu.png)
 
@@ -26,7 +26,7 @@ Some observations:
 * Training loss and accuracy curves converge pretty quickly and are smooth/stable. However the validation loss and accuracy oscillates a lot even towards the end of the training. That signals some instability in the networks despite the seemingly good result (96% accuracy).
 * There is a big gap between training and testing curves which clearly indicates the model overfits to data. It's interesting because even a shallow model may overfitting!
 
-## V-2
+## Rescaling input
 Then I noted that I didn't normalize the values of input data (intensity values are 0-255). So heeding the advice of many deep learning gurus, I scaled the input to 0-1 range. Here is the result.
 ![Custom_train_v2](/figures/custom_model_relu_rescaleX.png)
 
@@ -34,7 +34,7 @@ Some observations:
 * The model stops earlier.
 * The overfitting and oscillation are still there.
 
-## V-3
+## Drop-out
 Now I try drop out to help with overfitting. First I set the rate to 0.2.
 ![Custom_train_v3-1](/figures/custom_model_relu_rescaleX_drop0.2.png)
 
@@ -45,16 +45,38 @@ Some observations:
 * The model also stops early.
 * Drop-out doesn't help. It actually hurts when I increase the rate.
 
-## V-4
-Now I try another regul. Here is the result.
-![Custom_train_v4](/figures/custom_model_relu_rescaleX_dataAugFlip.png)
+## Data augmentation
+Now I try another regul. Flip horizontal and vertical.
+![Custom_train_v4-1](/figures/custom_model_relu_rescaleX_dataAugFlip.png)
 
-Some observations:
+Add shift left-right, up-down (0.2)
+![Custom_train_v4-2](/figures/custom_model_relu_rescaleX_dataAugFlipShift0.2.png)
 
-# InceptionV3 - version 1
+Add rotation
+![Custom_train_v4-3](/figures/custom_model_relu_rescaleX_dataAugFlipShift0.2Rot.png)
 
-# InceptionV3 - version 2
+Remove rotation, add Shear
+![Custom_train_v4-4](/figures/custom_model_relu_rescaleX_dataAugFlipShift0.2Shear.png)
 
-# InceptionV3 - version 3
+## Test restul
+![Custom_test_1(/figures/test_accuracy_custom.png)
+![Custom_test_2](/figures/custom_model.png)
+
+# InceptionV3
+## Basic
+![Custom_train_v4-1](/figures/InceptionV3_method1.png)
+![Custom_train_v4-1](/figures/test_accuracy_Inception_m1.png)
+![Custom_train_v4-1](/figures/InceptionV3_meth1.png)
+
+## Data augmentation
+![Custom_train_v4-1](/figures/InceptionV3_method2.png)
+![Custom_train_v4-1](/figures/test_accuracy_Inception_m2.png)
+![Custom_train_v4-1](/figures/InceptionV3_meth2.png)
+
+## Data augmentation + imbalanced data (10x more patches without tumor)
+![Custom_train_v4-1](/figures/InceptionV3_method3_noDataAug.png)
+![Custom_train_v4-1](/figures/InceptionV3_method3.png)
+![Custom_train_v4-1](/figures/test_accuracy_Inception_m3.png)
+![Custom_train_v4-1](/figures/InceptionV3_meth3.png)
 
 # Code
