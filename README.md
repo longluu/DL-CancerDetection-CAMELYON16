@@ -1,2 +1,31 @@
-# DL-CancerDetection-CAMELYON16
- Detect cancer tumor in giga-pixel images of breast
+# Project description
+In this project, I try the CAMELYON16 challenge (https://camelyon17.grand-challenge.org/Data/) but only use a subset of slides (21/400). It may seem like a super small dataset (even for the original one) but note that each slide is a set of images at different levels of magnifications (up to 9 levels). Each higher level has double resolution compared to the lower level, meaning the highest resolution is up to 500x or 100,000 x 100,000 pixels. Also, each slide has different number of levels and/or resolution.
+
+# Preprocessing
+For this project, I chose **level 3 of each slide (around 10,000 x 10,000)** for the training and testing. Then I reserved 2 slides as test data, which leaves 19 slides for training.
+
+1. Because of a small number of images and the super high resolution of each, an efficient approach is to chop off the slides into several small patches and train a model to classify whether that patch contains tumor cell or not. I use a pretty **small patch (32 x 32)** so that we have more training data and also a good localization of a tumor. The result is around **1.2 million patches** (not a bad dataset size).
+
+2. Another observation is that for many images, some big regions is simply gray background. These area are definitely not informative at all and may add noise into the model training. So instead of using all the regions, I tried to remove the patches that contain only background. At first, I tried intensity thresholding, that is converting patches to gray and remove those with mean intensity too high/too low. However, that did not work well because background patches and patches with cells have high overlapping of mean intensity. Therefore, I use a more efficient method, i.e. **thresholding based on variance across color channel**. For each location on the image, I computed the variance across the color channel and then average across all locations. That turns out to be a pretty good method. I chose a **threshold of 5** (just empirically). That results in around **450,000 patches**.
+
+3. Another note is that the remaining patches after thresholding are highly **imbalanced**, meaning that the number of patches without tumor are almost 10 times the number of patches with tumor. With that concern in mind, I first tried to balanced out the dataset by removing most patches without tumor to match it with the number of tumor patches. The result of that balancing is only around **40,000 patches** left for training. Spoiler: I'll show later that using the imbalanced dataset actually works much better (which makes sense given that we have 10x more data).
+
+4. Final small detail, I split the dataset into training (80%) and validation (20%).
+
+Now, we're ready for some exciting results of training deep (or shallow) networks!
+
+# Custom CNN networks
+## Architecture: 
+This is are relatively "shallow" neural networks. There are 4 convoluational blocks, each block contains a convolutional layer, batch normalization, drop out, activation and max pooling (2 x 2). I use Adam optimization with default parameters. I use batch size 128.
+
+## V-1
+This is the most basic version. Here is the result.
+![Custom_train_v1](/figures/custom_model_relu.png)
+
+# InceptionV3 - version 1
+
+# InceptionV3 - version 2
+
+# InceptionV3 - version 3
+
+# Code
