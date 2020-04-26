@@ -87,7 +87,7 @@ Remove rotation, add Shear
 # InceptionResnetV2
 ## Data augmentation
 ![](/figures/InceptionResnetV3_method1.png)
-![](/figures/test_accuracy_InceptionResnetV2.png | width = 269) ![](/figures/roc_InceptionResnetV2.png)
+![](/figures/test_accuracy_InceptionResnetV2.png){:height="269px" width="85px"} ![](/figures/roc_InceptionResnetV2.png)
 
 
 # Code
