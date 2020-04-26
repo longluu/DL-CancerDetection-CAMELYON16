@@ -106,6 +106,7 @@ It looks like data augmentation helps with overfitting.
 
 ### Test
 Let's see the result on test data.
+
 ![Custom_train_v4-1](/figures/test_accuracy_Inception_m2.png)
 ![](/figures/roc_InceptionV3_m2.png)
 
