@@ -60,17 +60,20 @@ Remove rotation, add Shear
 
 ## Test result
 ![Custom_test_1](/figures/test_accuracy_custom.png)
+![](/figures/roc_custom_model.png)
 ![Custom_test_2](/figures/custom_model.png)
 
 # InceptionV3
 ## Basic
 ![Custom_train_v4-1](/figures/InceptionV3_method1.png)
 ![Custom_train_v4-1](/figures/test_accuracy_Inception_m1.png)
+![](/figures/roc_InceptionV3_m1.png)
 ![Custom_train_v4-1](/figures/InceptionV3_meth1.png)
 
 ## Data augmentation
 ![Custom_train_v4-1](/figures/InceptionV3_method2.png)
 ![Custom_train_v4-1](/figures/test_accuracy_Inception_m2.png)
+![](/figures/roc_InceptionV3_m2.png)
 ![Custom_train_v4-1](/figures/InceptionV3_meth2.png)
 
 ## Imbalanced data (10x more patches without tumor)
@@ -79,11 +82,13 @@ Remove rotation, add Shear
 ## Data augmentation + imbalanced data (10x more patches without tumor)
 ![Custom_train_v4-1](/figures/InceptionV3_method3.png)
 ![Custom_train_v4-1](/figures/test_accuracy_Inception_m3.png)
+![](/figures/roc_InceptionV3_m3.png)
 ![Custom_train_v4-1](/figures/InceptionV3_meth3.png)
 
 # InceptionResnetV2
 ## Data augmentation
 ![](/figures/InceptionResnetV3_method1.png)
+![](/figures/roc_InceptionResnetV2.png)
 
 
 # Code
