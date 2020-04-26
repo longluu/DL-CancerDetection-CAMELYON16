@@ -102,6 +102,7 @@ Remove rotation, add Shear
 ### Test
 ![](/figures/test_accuracy_InceptionResnetV2.png)
 ![](/figures/roc_InceptionResnetV2.png)
+![](/figures/InceptionResnetV2.png)
 
 
 # Code
