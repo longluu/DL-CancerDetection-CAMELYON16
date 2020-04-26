@@ -141,7 +141,9 @@ And here is the test result:
 Voila!!! Both the accuracy (96%) and f-1 score (0.94) are so much better than the previous models. The AUC is better, too.
 
 So let's do some visualization:
+
 ![](/figures/InceptionV3_meth3.png)
+
 The images clearly reflects the high accuracy and f-1 score. The prediction is pretty good actually.
 
 # InceptionResnetV2
@@ -158,7 +160,11 @@ Just to throw this in because I tried this but this is not important because the
 
 # Code
 CancerDetection_preprocessing_1level: code to preprocess the data (extract patches)
+
 CancerDetection_model_training_1level_customShallow: train the custom shallow model
+
 CancerDetection_model_training_1level_transfer: transfer learning with InceptionV3
+
 CancerDetection_model_test: test the models on test set and visualize the results
+
 CancerDetection_visualize: the starter code to describe project and read and visualize the slides
