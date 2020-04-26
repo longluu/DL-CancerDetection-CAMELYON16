@@ -64,15 +64,23 @@ Now that the validation result looks pretty promising, let's try on the hold-out
 First, I computed the accuracy (79%) and f-1 score (0.77). Here is the full confusion matrix:
 ![Custom_test_1](/figures/test_accuracy_custom.png)
 
-Alright, the result is not that bad but it definitely does not look that shiny (remember the validation accuracy is 97%).
-
+Alright, the result is not that bad but it definitely does not look that shiny (remember the validation accuracy is 97%). Now note that the output of the model is a score ranging from 0-1. To make a binary prediction, I thresholded the score so that values under 0.5 become 0 and those above 0.5 become 1. The accuracy and f-1 score is computed from that choice of threshold. However, that may not be the optimal threshold. So to have a metric that is independent of the choice of threshold, I computed the ROC curve and then the area under the curve (AUC). Here's the result:
 ![](/figures/roc_custom_model.png)
+
+Okay, now the result somewhat explains why our test result is so poor compared to the validation. It is because of our arbitrary (but popular) choice of the threshold. Note the kink on the left corner of the ROC. The AUC metric is actually not that bad. However, in practice, we cannot choose an optimal threshold for the test (because we don't have the ground truth). So that doesn't completely solve the problem. 
+
+Now assumming we go with the threshold 0.5, here is some visualization to see how the prediction works (the white region in the mask is tumor region):
 ![Custom_test_2](/figures/custom_model.png)
+It is totally clear that the main reason for low accuracy is very high false positive. That is we see a larger white region in the prediction compared to the ground truth.
 
 # InceptionV3
+Ok, now let's try some thing more fancy: a really deep networks. So for this, I use transfer learning with the popular InceptionV3. First I loaded the model, get rid of the top layer and add a softmax on top because we have binary classification. Also, I noted that the size of input image must be at least 75x75. Because our patches are 32x32, I had to upsample the images first using bilinear method). Then I freeze the base model and train only the top one for 20 epochs to make sure the weights of the added top layer is reasonable before the full training (learning rate = 0.005). After that, I unfreezed all layers except those from 1-40 (that is basically at the first mixed block). Then I trained the whole model (lr = 0.002). For all training, I used Adam optimizer.
+
 ## Basic
+For this model, there is no data augmentation and batch size is 128.
 ### Train
 ![Custom_train_v4-1](/figures/InceptionV3_method1.png)
+The training again shows pretty promising result. 
 
 ### Test
 ![Custom_train_v4-1](/figures/test_accuracy_Inception_m1.png)
