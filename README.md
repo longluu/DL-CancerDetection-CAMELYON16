@@ -135,6 +135,7 @@ Alright, the training looks much better! But does it work on the test dataset? A
 
 ### Test
 And here is the test result:
+
 ![](/figures/test_accuracy_Inception_m3.png) 
 ![](/figures/roc_InceptionV3_m3.png)
 Voila!!! Both the accuracy (96%) and f-1 score (0.94) are so much better than the previous models. The AUC is better, too.
