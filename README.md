@@ -12,7 +12,7 @@ For this project, I chose **level 3 of each slide (around 10,000 x 10,000)** for
 
 4. Final small detail, I split the dataset into training (80%) and validation (20%).
 
-Now, we're ready for some exciting results of training deep (or shallow) networks!
+Now, we're ready for some exciting results of training deep (or shallow) networks! **Note that all metrics are computed at the patche level, not the slide level.**
 
 # Custom CNN networks
 ## Architecture: 
@@ -59,7 +59,13 @@ Remove rotation, add Shear
 ![Custom_train_v4-4](/figures/custom_model_relu_rescaleX_dataAugFlipShift0.2Shear.png)
 
 ## Test result
+Now that the validation result looks pretty promising, let's try on the hold-out test set containing 2 slides. I applied the same patch extraction method as in the training. That is, I just extracted the patches with cells only. All the background patches are automatically flagged as no tumor. That gives around **85,000 test patches**.
+
+First, I computed the accuracy (79%) and f-1 score (0.77). Here is the full confusion matrix:
 ![Custom_test_1](/figures/test_accuracy_custom.png)
+
+Alright, the result is not that bad but it definitely does not look that shiny (remember the validation accuracy is 97%).
+
 ![](/figures/roc_custom_model.png)
 ![Custom_test_2](/figures/custom_model.png)
 
