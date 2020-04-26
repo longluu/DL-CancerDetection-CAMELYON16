@@ -1,5 +1,5 @@
 # Project description
-In this project, I try the CAMELYON16 challenge (https://camelyon17.grand-challenge.org/Data/) but only use a subset of slides (21/400). It may seem like a super small dataset (even for the original one) but note that each slide is a set of images at different levels of magnifications (up to 9 levels). Each higher level has double resolution compared to the lower level, meaning the highest resolution is up to 500x or 100,000 x 100,000 pixels. Also, each slide has different number of levels and/or resolution.
+In this project, I try the CAMELYON16 challenge (https://camelyon16.grand-challenge.org/data/) but only use a subset of slides (21/400). It may seem like a super small dataset (even for the original one) but note that each slide is a set of images at different levels of magnifications (up to 9 levels). For each slide, the higher level has double resolution compared to the lower level, meaning the highest resolution is up to 500x or 100,000 x 100,000 pixels. Also, each slide has different number of levels and/or resolution.
 
 # Preprocessing
 For this project, I chose **level 3 of each slide (around 10,000 x 10,000)** for the training and testing. Then I reserved 2 slides as test data, which leaves 19 slides for training.
