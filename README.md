@@ -80,35 +80,71 @@ Ok, now let's try some thing more fancy: a really deep networks. So for this, I 
 For this model, there is no data augmentation and batch size is 128.
 ### Train
 ![Custom_train_v4-1](/figures/InceptionV3_method1.png)
-The training again shows pretty promising result. 
+The training again looks fine. Some observation:
+* First, compared to the shallow custom model, the training may be a bit unstable at first but then it gradually becomes more stable, esp. towards the end of training. That is in huge contrast to the shallow model which is unstable even towards the end of training.
+* Second, similar to the custom model, there is overfitting (the gap between train and validation). That should be expected given the size of the model.
 
 ### Test
+Now let's try the model on test data. Here's the accuracy and f-1 score.
 ![Custom_train_v4-1](/figures/test_accuracy_Inception_m1.png)
+
+Interestingly, the accuracy and f-1 are quite similar to the shallow model. Now let's look at the ROC:
 ![](/figures/roc_InceptionV3_m1.png)
+
+Here the ROC shows that the model performance is clearly better than the shallow model. And the ROC curve is pretty smooth, probably reflecting the stability of such big model. 
+
+And here is the visualization of the model's classification:
 ![Custom_train_v4-1](/figures/InceptionV3_meth1.png)
+It does not look better than the shallow model, which is expected given the similar accuracy.
 
 ## Data augmentation
+Okay now we see that the model clearly overfits, let's try data augmentation as in the shallow model.
+
 ### Train
+It looks like data augmentation helps with overfitting.
 ![Custom_train_v4-1](/figures/InceptionV3_method2.png)
 
 ### Test
+Let's see the result on test data.
 ![Custom_train_v4-1](/figures/test_accuracy_Inception_m2.png)
 ![](/figures/roc_InceptionV3_m2.png)
+
+Surprisingly, the performance is **worse** than the basic model without data augmentation. Probably the augmentation does not reflect the real situation.
+
+And here is the visualization:
 ![Custom_train_v4-1](/figures/InceptionV3_meth2.png)
 
 ## Imbalanced data (10x more patches without tumor)
+Alright, I have to admit that I'm quite frustrated with the result so far. Although the AUC metric is pretty good, the accuracy and f-1 score are not that good given the threshold 0.5. As mentioned, in practice we don't have the luxury to choose the best threshold for the test set (although we can get that from the training, I'm not sure if it works). 
+
+So I step back and take a deep breath...
+
+It may be that we don't have enough data (40,000 is nothing for such model like InceptionV3). So it came to me that why don't we train on all patches with cell. Recall that because there is an imbalance between number of tumor patches and no-tumor patches, I throw a way a lot of no-tumor patches (around 400,000) to make the dataset balanced. Why don't we try on the whole, imbalanced dataset? Because it doesn't hurt to try (if you have time), I set out to do that. I first try without data augmentation.
+
 ### Train
+The training doesn't look good. There is a clear overfitting.
 ![Custom_train_v4-1](/figures/InceptionV3_method3_noDataAug.png)
 
 ## Data augmentation + imbalanced data (10x more patches without tumor)
+So now I tried to add data augmentation and pray...
+
 ### Train
+Alright, the training looks much better! But does it work on the test dataset? After all, although the validation loss is lower than previous models, it's not that much.
 ![](/figures/InceptionV3_method3.png)
 
 ### Test
-![](/figures/test_accuracy_Inception_m3.png) ![](/figures/roc_InceptionV3_m3.png)
+And here is the test result:
+![](/figures/test_accuracy_Inception_m3.png) 
+![](/figures/roc_InceptionV3_m3.png)
+Voila!!! Both the accuracy (96%) and f-1 score (0.94) are so much better than the previous models. The AUC is better, too.
+
+So let's do some visualization:
 ![](/figures/InceptionV3_meth3.png)
+The images clearly reflects the high accuracy and f-1 score. The prediction is pretty good actually.
 
 # InceptionResnetV2
+Just to throw this in because I tried this but this is not important because the result with InceptionV3 is already pretty good. I also tried InceptionResnetV2 which is supposed to be better. But after I got the good result with InceptionV3 on imbalanced data, I just stopped trying this. So here I just show what I got (i.e. on balanced dataset with data augmentation). The result is more or less similar to InceptionV3. One thing to note is that it seems like the model seems to converge faster than InceptionV3 which is something people found before.
+
 ## Data augmentation
 ### Train
 ![](/figures/InceptionResnetV3_method1.png)
@@ -118,5 +154,9 @@ The training again shows pretty promising result.
 ![](/figures/roc_InceptionResnetV2.png)
 ![](/figures/InceptionResnetV2.png)
 
-
 # Code
+CancerDetection_preprocessing_1level: code to preprocess the data (extract patches)
+CancerDetection_model_training_1level_customShallow: train the custom shallow model
+CancerDetection_model_training_1level_transfer: transfer learning with InceptionV3
+CancerDetection_model_test: test the models on test set and visualize the results
+CancerDetection_visualize: the starter code to describe project and read and visualize the slides
