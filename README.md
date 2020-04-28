@@ -177,3 +177,6 @@ CancerDetection_model_training_1level_transfer: transfer learning with Inception
 CancerDetection_model_test: test the models on test set and visualize the results
 
 CancerDetection_visualize: the starter code to describe project and read and visualize the slides
+
+### Reference
+Liu, Y., Gadepalli, K., Norouzi, M., Dahl, G. E., Kohlberger, T., Boyko, A., ... & Hipp, J. D. (2017). Detecting cancer metastases on gigapixel pathology images. arXiv preprint arXiv:1703.02442.
