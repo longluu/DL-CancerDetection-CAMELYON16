@@ -94,7 +94,7 @@ The training again looks fine. Some observation:
 
 ### Test
 Now let's try the model on test data. Here's the accuracy and f-1 score.
-![Custom_train_v4-1](/figures/test_accuracy_Inception_m1.png)
+![](/figures/test_accuracy_Inception_m1.png)
 
 Interestingly, the accuracy and f-1 are quite similar to the shallow model. Now let's look at the ROC:
 ![](/figures/roc_InceptionV3_m1.png)
@@ -102,8 +102,12 @@ Interestingly, the accuracy and f-1 are quite similar to the shallow model. Now 
 Here the ROC shows that the model performance is clearly better than the shallow model. And the ROC curve is pretty smooth, probably reflecting the stability of such big model. 
 
 And here is the visualization of the model's classification:
-![Custom_train_v4-1](/figures/InceptionV3_meth1.png)
+![](/figures/InceptionV3_meth1.png)
 It does not look better than the shallow model, which is expected given the similar accuracy.
+
+Given the better AUC, the scores may be better than previous custom model. However, again the histogram of raw scores show heavy concetration of scores at the two ends. Here is the histogram plot.
+
+![](/figures/hist_score_InceptionV3-Freeze40.png)
 
 ## Data augmentation
 Okay now we see that the model clearly overfits, let's try data augmentation as in the shallow model.
