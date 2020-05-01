@@ -7,11 +7,9 @@ For this project, I chose **level 3 of each slide (around 10,000 x 10,000)** for
 1. Because of a small number of images and the super high resolution of each, an efficient approach is to chop off the slides into several small patches and train a model to classify whether that patch contains tumor cell or not. I use a pretty **small patch (32 x 32)** so that we have more training data and also a good localization of a tumor. The result is around **1.2 million patches** (not a bad dataset size).
 
 2. Another observation is that for many images, some big regions is simply gray background. These area are definitely not informative at all and may add noise into the model training. So instead of using all the regions, I tried to remove the patches that contain only background. At first, I tried intensity thresholding, that is converting patches to gray and remove those with mean intensity too high/too low. However, that did not work well because background patches and patches with cells have high overlapping of mean intensity. Here is some examples patches (m:mean instensity, std: mean standard deviation across color channel).
-
 ![](/figures/patches_all.png)
 
 Therefore, I use a more efficient method, i.e. **thresholding based on standard deviation (std) across color channel**. For each location on the image, I computed the std across the color channel and then average across all locations. That turns out to be a pretty good method. I chose a **threshold of 5** (just empirically). That results in around **450,000 patches**. Here is some example patches with/without tumor and the mean std across color channel:
-
 ![](/figures/patches_with_cell.png)
 
 3. Another note is that the remaining patches after thresholding are highly **imbalanced**, meaning that the number of patches without tumor are almost 10 times the number of patches with tumor. With that concern in mind, I first tried to balanced out the dataset by removing most patches without tumor to match it with the number of tumor patches. The result of that balancing is only around **40,000 patches** left for training. Spoiler: I'll show later that using the imbalanced dataset actually works much better (which makes sense given that we have 10x more data).
@@ -94,7 +92,7 @@ The training again looks fine. Some observation:
 
 ### Test
 Now let's try the model on test data. Here's the accuracy and f-1 score.
-![Custom_train_v4-1](/figures/test_accuracy_Inception_m1.png)
+![](/figures/test_accuracy_Inception_m1.png)
 
 Interestingly, the accuracy and f-1 are quite similar to the shallow model. Now let's look at the ROC:
 ![](/figures/roc_InceptionV3_m1.png)
@@ -102,8 +100,11 @@ Interestingly, the accuracy and f-1 are quite similar to the shallow model. Now 
 Here the ROC shows that the model performance is clearly better than the shallow model. And the ROC curve is pretty smooth, probably reflecting the stability of such big model. 
 
 And here is the visualization of the model's classification:
-![Custom_train_v4-1](/figures/InceptionV3_meth1.png)
+![](/figures/InceptionV3_meth1.png)
 It does not look better than the shallow model, which is expected given the similar accuracy.
+
+Given the better AUC, the scores may be better than previous custom model. However, again the histogram of raw scores show heavy concetration of scores at the two ends. Here is the histogram plot.
+![](/figures/hist_score_InceptionV3-Freeze40.png)
 
 ## Data augmentation
 Okay now we see that the model clearly overfits, let's try data augmentation as in the shallow model.
@@ -176,3 +177,6 @@ CancerDetection_model_training_1level_transfer: transfer learning with Inception
 CancerDetection_model_test: test the models on test set and visualize the results
 
 CancerDetection_visualize: the starter code to describe project and read and visualize the slides
+
+### Reference
+Liu, Y., Gadepalli, K., Norouzi, M., Dahl, G. E., Kohlberger, T., Boyko, A., ... & Hipp, J. D. (2017). Detecting cancer metastases on gigapixel pathology images. arXiv preprint arXiv:1703.02442.
