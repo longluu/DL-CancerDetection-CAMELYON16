@@ -1,15 +1,14 @@
 # Project description
 In this project, I try the CAMELYON16 challenge (https://camelyon16.grand-challenge.org/data/) but only use a subset of slides (21/400). It may seem like a super small dataset (even for the original one) but note that each slide is a set of images at different levels of magnifications (up to 9 levels). For each slide, the higher level has double resolution compared to the lower level, meaning the highest resolution is up to 500x or 100,000 x 100,000 pixels. Also, each slide has different number of levels and/or resolution. Here I show an example slide and the label.
 
+![](/figures/example_data.png)
+
+On the left is the original image and on the right is the label image that indicates tumor region in white.
 
 # Preprocessing
 For this project, I chose **level 3 of each slide (around 10,000 x 10,000)** for the training and testing. Then I reserved 2 slides as test data, which leaves 19 slides for training.
 
 1. Because of a small number of images and the super high resolution of each, an efficient approach is to chop off the slides into several small patches and train a model to classify whether that patch contains tumor cell or not. I use a pretty **small patch (32 x 32)** so that we have more training data and also a good localization of a tumor. The result is around **1.2 million patches** (not a bad dataset size).
-
-![](/figures/example_data.png)
-
-On the left is the original image and on the right is the label image that indicates tumor region in white.
 
 2. Another observation is that for many images, some big regions is simply gray background. These area are definitely not informative at all and may add noise into the model training. So instead of using all the regions, I tried to remove the patches that contain only background. At first, I tried intensity thresholding, that is converting patches to gray and remove those with mean intensity too high/too low. However, that did not work well because background patches and patches with cells have high overlapping of mean intensity. Here is some examples patches (m:mean instensity, std: mean standard deviation across color channel).
 ![](/figures/patches_all.png)
